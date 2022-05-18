@@ -3,7 +3,6 @@ package User
 import (
 	"PemWeb_BE/Auth"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"github.com/joho/godotenv"
@@ -63,7 +62,7 @@ func Routes(db *gorm.DB, q *gin.Engine) {
 		if err := db.Create(&create); err.Error != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"success": false,
-				"message": "Something went wrong with the database",
+				"message": "Something went wrong with the database row creation",
 				"error":   err.Error.Error(),
 			})
 			return
@@ -101,8 +100,6 @@ func Routes(db *gorm.DB, q *gin.Engine) {
 			})
 			return
 		}
-		fmt.Println(login.Password)
-		fmt.Println(hash(input.Password))
 		if err := bcrypt.CompareHashAndPassword([]byte(login.Password), []byte(input.Password)); err != nil {
 			c.JSON(http.StatusForbidden, gin.H{
 				"success": false,

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"PemWeb_BE/Car"
 	"PemWeb_BE/Database"
 	"PemWeb_BE/User"
 	"fmt"
@@ -35,6 +36,7 @@ func main() {
 
 	//router disini
 	User.Routes(db, r)
+	Car.Routes(db, r)
 
 	fmt.Println("Router siap")
 	if err := r.Run(":5000"); err != nil {
